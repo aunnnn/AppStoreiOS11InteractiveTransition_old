@@ -342,6 +342,7 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
             }
         } else {
             UIView.animate(withDuration: self.transitionDuration(using: ctx), animations: {
+                // Blur & corner radius (FIXME: Bug corner radius not working!)
                 self.blurEffectView?.effect = UIBlurEffect(style: .light)
                 self.blurEffectView?.alpha = 1.0
                 self.animatingContainerView?.layer.cornerRadius = 0
@@ -350,12 +351,6 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
                 self.heightAnc.constant = detailVc.cardContentView.bounds.height
                 self.cardBottomAnc.isActive = true
                 self.animatingContainerView.layoutIfNeeded()
-            }) { (finished) in }
-            UIView.animate(withDuration: self.transitionDuration(using: ctx), delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: [UIViewAnimationOptions.beginFromCurrentState], animations: {
-
-                self.topAnc.constant = 0
-                container.setNeedsLayout()
-                container.layoutIfNeeded()
             }) { (finished) in
                 self.animatingContainerView.removeFromSuperview()
                 self.animatingContainerView = nil
@@ -363,6 +358,16 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
                 self.fromCell?.isHidden = false
                 toView.isHidden = false
                 ctx.completeTransition(true)
+            }
+
+            // Spring vertical animation
+            UIView.animate(withDuration: self.transitionDuration(using: ctx), delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: [UIViewAnimationOptions.beginFromCurrentState], animations: {
+
+                self.topAnc.constant = 0
+                container.setNeedsLayout()
+                container.layoutIfNeeded()
+            }) { (finished) in
+
             }
 
         }

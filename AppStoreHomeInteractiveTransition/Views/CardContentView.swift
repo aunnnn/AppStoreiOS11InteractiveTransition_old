@@ -57,6 +57,8 @@ import UIKit
     }
 
     private func commonSetup() {
+        // *Make the background image stays still at the center while we animationg,
+        // else the image will get resized during animation.
         imageView.contentMode = .center
         fontState(isHighlighted: false)
     }
