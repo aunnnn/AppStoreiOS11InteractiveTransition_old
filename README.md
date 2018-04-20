@@ -1,6 +1,7 @@
 # AppStoreTodayInteractiveTransition
 This is an attempt to simulate App Store's Card Interactive Transition. It is not exactly the same as the App Store's animation, but sure is a fun challenge.
 
+![preview](https://raw.githubusercontent.com/aunnnn/AppStoreTodayInteractiveTransition/master/appstoreanimation.gif)
 
 
 ## The details you realized after working on it:
@@ -9,6 +10,7 @@ This is an attempt to simulate App Store's Card Interactive Transition. It is no
 - A card's background image stays still throughout animation
 - \*A card's edges can't be simply expanded with spring animation of AutoLayout constraints to achieve the result. You can see that there is a little push upward when presenting the card. To achieve this, we need to do width/height animation and vertical spring animation separately.
 - At detail page, when you drag and reach the top, it starts dismissing transition seamlessly.
+- Also, it supports left edge pan gesture to dismiss.
 - Two-step interactive animation on dismissing that is achieved with `UIView.animateKeyFrames`: 1. scaling down, 2. animate back to original card position at home page.
 
 ## Future improvements
