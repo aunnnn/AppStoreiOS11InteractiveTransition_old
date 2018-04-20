@@ -61,6 +61,7 @@ import UIKit
         fontState(isHighlighted: false)
     }
 
+    // This is for smooth animation state, it "connects" highlighted (pressedDown) font's size with the destination card's font size
     func fontState(isHighlighted: Bool) {
         if isHighlighted {
             primaryLabel.font = UIFont.systemFont(ofSize: 33 * kHighlightedFactor, weight: .bold)

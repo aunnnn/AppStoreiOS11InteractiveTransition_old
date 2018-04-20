@@ -44,7 +44,6 @@ final class CardCollectionViewCell: UICollectionViewCell {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         self.animate(isHighlighted: true)
-        print("touch began")
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
