@@ -16,6 +16,7 @@ final class CardToDetailTransitionManager: UIPercentDrivenInteractiveTransition,
 
     enum Constants {
         static let transitionDuration: TimeInterval = 0.5
+        static let transitionDurationForDismissing: TimeInterval = 0.8
         static let minimumScaleUntilDismissing: CGFloat = 0.8
         static let progressUntilDismissing: Double = 0.5
     }
@@ -127,7 +128,11 @@ extension CardToDetailTransitionManager: CardDetailInteractivityDelegate {
 extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return Constants.transitionDuration
+        if isPresenting {
+            return Constants.transitionDuration
+        } else {
+            return Constants.transitionDurationForDismissing
+        }
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -147,12 +152,6 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
 
         let detailVc = (self.isPresenting ? screens.to : screens.from) as! CardDetailViewController
 
-        // Convenience to get membership vc, in case we want to do some transition on it
-        //        let getMembershipViewController: () -> MembershipViewController = { [unowned self] in
-        //            let tab = (self.isPresenting ? screens.from : screens.to) as! PizzaTabBarController
-        //            return (tab.selectedViewController as! UINavigationController).topViewController! as! MembershipViewController
-        //        }
-
         let container = ctx.containerView
         let fromView = ctx.view(forKey: .from)!
         let toView = ctx.view(forKey: .to)!
@@ -161,7 +160,6 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
             fromCell?.layer.removeAllAnimations()
             fromCell?.isHidden = true
         }
-
 
         if isPresenting {
 
@@ -194,31 +192,8 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
 
             originalCardModel = cardViewModel
             (animatingCardView).viewModel = cardViewModel.scaledHighlightImageState()
-//            container.addSubview(animatingCardView)
 
             animatingContainerView.addSubview(animatingCardView)
-
-            do {
-                let a = animatingCardView
-
-//                topAnc = a.topAnchor.constraint(equalTo: c.topAnchor, constant: fromCardFrame.minY)
-//                leftAnc = a.leftAnchor.constraint(equalTo: c.leftAnchor, constant: fromCardFrame.minX)
-//                bottomAnc = a.bottomAnchor.constraint(equalTo: c.bottomAnchor, constant: -(container.bounds.height - fromCardFrame.maxY))
-//                rightAnc = a.rightAnchor.constraint(equalTo: c.rightAnchor, constant: -(container.bounds.width - fromCardFrame.maxX))
-
-//                [topAnc, leftAnc, bottomAnc, rightAnc].forEach { (c) in
-//                    c!.isActive = true
-//                }
-
-//                widthAnc = a.widthAnchor.constraint(equalToConstant: fromCardFrame.width)
-//                heightAnc = a.heightAnchor.constraint(equalToConstant: fromCardFrame.height)
-//                centerXAnc = a.centerXAnchor.constraint(equalTo: animatingContainerView.leftAnchor, constant: fromCardFrame.midX)
-//                centerYAnc = a.centerYAnchor.constraint(equalTo: animatingContainerView.topAnchor, constant: fromCardFrame.midY)
-//                [widthAnc, heightAnc, centerXAnc, centerYAnc].forEach { c in
-//                    c?.priority = UILayoutPriority(900)
-//                    c?.isActive = true
-//                }
-            }
 
             let whiteContentView = UIView()
             self.animatingWhiteContentView = whiteContentView
@@ -227,9 +202,8 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
             whiteContentView.layer.shadowOpacity = 0.2
             whiteContentView.layer.shadowOffset = .init(width: 0, height: 4)
             whiteContentView.layer.shadowRadius = 12
-
             whiteContentView.translatesAutoresizingMaskIntoConstraints = false
-//            container.insertSubview(whiteContentView, belowSubview: animatingCardView)
+
             animatingContainerView.insertSubview(whiteContentView, belowSubview: animatingCardView)
 
             // White Content
@@ -247,16 +221,6 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
 
                 cardBottomAnc = w.heightAnchor.constraint(equalTo: animatingContainerView.heightAnchor)
                 cardBottomAnc.priority = UILayoutPriority(999)
-
-//                let whiteToCardBottom = w.bottomAnchor.constraint(equalTo: card.bottomAnchor)
-//                whiteToCardBottom.priority = UILayoutPriority(999)
-//                whiteToCardBottom.isActive = true
-//
-//                let whiteToContainerBottom = w.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-//                whiteToContainerBottom.priority = UILayoutPriority(1000)
-//                whiteToContainerBottom.isActive = false
-
-//                cardBottomAnc = whiteToContainerBottom
             }
 
             animatingContainerView.widthAnchor.constraint(equalTo: container.widthAnchor).isActive = true
@@ -312,17 +276,10 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
         }
 
         if isDismissing {
-
             let minimumScale = Constants.minimumScaleUntilDismissing
             let progressUntilDismissing = Constants.progressUntilDismissing
 
             let fv = animatingCardView!
-            let center = fv.center
-            let fromWidth = fv.bounds.width
-            let fromHeight = fv.bounds.height
-            let toWidth = fromWidth * minimumScale
-            let toHeight = fromHeight * minimumScale
-            let toFrame = CGRect(x: center.x - toWidth/2, y: center.y - toHeight/2, width: toWidth, height: toHeight)
 
             let destinationConstraints: [NSLayoutConstraint] = { [unowned self] in
                 let w = fv.widthAnchor.constraint(equalToConstant: self.fromCardFrameWithoutTransform.width)
@@ -384,35 +341,6 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
                 }
             }
         } else {
-            let animationDuration = self.transitionDuration(using: ctx)
-
-            let fv = animatingCardView!
-
-//            UIView.animate(withDuration: animationDuration, animations: {
-//                self.blurEffectView?.effect = UIBlurEffect(style: .light)
-//                self.blurEffectView?.alpha = 1.0
-//                self.animatingCardView?.layer.cornerRadius = 0
-//                self.animatingWhiteContentView?.layer.cornerRadius = 0
-//                container.layoutIfNeeded()
-//            }) { (finished) in
-//                self.animatingCardView?.removeFromSuperview()
-//                self.animatingCardView = nil
-//
-//                self.fromCell?.resetTransform()
-//                self.fromCell?.isHidden = false
-//                toView.isHidden = false
-//                ctx.completeTransition(true)
-//            }
-
-//            UIView.animate(withDuration: animationDuration/2, animations: {
-//                self.animatingCardView?.transform = CGAffineTransform.identity.translatedBy(x: 0, y: -44)
-//            }) { (finished) in
-//                UIView.animate(withDuration: animationDuration/2, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.3, options: [UIViewAnimationOptions.beginFromCurrentState], animations: {
-//                    self.animatingCardView?.transform = .identity
-//                }) { (finished) in
-//
-//                }
-//            }
             UIView.animate(withDuration: self.transitionDuration(using: ctx), animations: {
                 self.blurEffectView?.effect = UIBlurEffect(style: .light)
                 self.blurEffectView?.alpha = 1.0
@@ -422,45 +350,15 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
                 self.heightAnc.constant = detailVc.cardContentView.bounds.height
                 self.cardBottomAnc.isActive = true
                 self.animatingContainerView.layoutIfNeeded()
-            }) { (finished) in
-
-            }
+            }) { (finished) in }
             UIView.animate(withDuration: self.transitionDuration(using: ctx), delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: [UIViewAnimationOptions.beginFromCurrentState], animations: {
 
-//                let destinationConstraints1: [NSLayoutConstraint] = {
-//                    let t =
-//                    let w = fv.widthAnchor.constraint(equalToConstant: detailVc.cardContentView.bounds.width)
-//                    let h = fv.heightAnchor.constraint(equalToConstant: detailVc.cardContentView.bounds.height)
-//                    return [w, h]
-//                }()
-
                 self.topAnc.constant = 0
-
-//                [self.topAnc, self.widthAnc, self.heightAnc].forEach { c in
-//                    c?.isActive = false
-//                }
-//
-//                destinationConstraints1.forEach({ (c) in
-//                    c.priority = UILayoutPriority(999)
-//                    c.isActive = true
-//                })
-
-//                let my = fv.centerYAnchor.constraint(equalTo: container.topAnchor, constant: detailVc.cardContentView.bounds.height/2)
-
-
-
-//                self.centerYAnc.isActive = false
-//                my.isActive = true
                 container.setNeedsLayout()
                 container.layoutIfNeeded()
-
             }) { (finished) in
-
                 self.animatingContainerView.removeFromSuperview()
                 self.animatingContainerView = nil
-//                self.animatingCardView?.removeFromSuperview()
-//                self.animatingCardView = nil
-
                 self.fromCell?.resetTransform()
                 self.fromCell?.isHidden = false
                 toView.isHidden = false
@@ -541,7 +439,6 @@ extension CardToDetailTransitionManager: UIGestureRecognizerDelegate {
 
         let progressForDismissing = CGFloat(Constants.progressUntilDismissing)
 
-        //        print("pan \(progress)")
         switch gesture.state {
         case .began:
             break
@@ -571,16 +468,5 @@ extension CardToDetailTransitionManager: UIGestureRecognizerDelegate {
 
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return self.isInteractive ? self : nil
-    }
-}
-
-
-private extension CardToDetailTransitionManager {
-
-    private static func renderInContextPreservingFrame(ctx: CGContext, view: UIView) {
-        ctx.saveGState()
-        ctx.translateBy(x: view.frame.minX, y: view.frame.minY)
-        view.layer.render(in: ctx)
-        ctx.restoreGState()
     }
 }

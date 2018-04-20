@@ -28,7 +28,9 @@ final class HomeViewController: AnimatableStatusBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Make it responds fast to highlight state, so we can make press-down animation immediately.
         collectionView.delaysContentTouches = false
+
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.minimumLineSpacing = 20
             layout.minimumInteritemSpacing = 0
@@ -78,12 +80,12 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("didselect")
         let vc = storyboard!.instantiateViewController(withIdentifier: "CardDetailViewController") as! CardDetailViewController
         let ind = indexPath
         let cardModel = models[ind.item]
         let cell = collectionView.cellForItem(at: ind) as! CardCollectionViewCell
 
+        // Freeze animation highlighted state (or else it will bounce back)
         cell.disabledAnimation = true
         cell.layer.removeAllAnimations()
 
@@ -92,6 +94,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
         vc.cardViewModel = cardModel.scaledHighlightImageState()
 
+        // Card's frame relative to UIWindow
         let frameWithoutTransform = { () -> CGRect in
             let center = cell.center
             let size = cell.bounds.size
@@ -105,12 +108,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }()
 
         let params = (fromCardFrame: cardFrame, fromCardFrameWithoutTransform: frameWithoutTransform, viewModel: cardModel, fromCell: cell)
-        self.transitionManager = CardToDetailTransitionManager.init(params)
+        self.transitionManager = CardToDetailTransitionManager(params)
         self.transitionManager.cardDetailViewController = vc
         vc.transitioningDelegate = transitionManager
 
         self.present(vc, animated: true, completion: {
             cell.isHidden = false
+
+            // Unfreeze
             cell.disabledAnimation = false
         })
     }

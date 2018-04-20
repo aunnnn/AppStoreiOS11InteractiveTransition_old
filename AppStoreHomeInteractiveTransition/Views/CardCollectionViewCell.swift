@@ -14,12 +14,6 @@ final class CardCollectionViewCell: UICollectionViewCell {
 
     var disabledAnimation = false
 
-//    override var isHighlighted: Bool {
-//        didSet {
-//            self.animate(isHighlighted: isHighlighted)
-//        }
-//    }
-
     func animate(isHighlighted: Bool, completion: ((Bool) -> Void)?=nil) {
         if disabledAnimation { return }
         if isHighlighted {
@@ -56,12 +50,10 @@ final class CardCollectionViewCell: UICollectionViewCell {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         self.animate(isHighlighted: false)
-        print("touch ended")
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesCancelled(touches, with: event)
         self.animate(isHighlighted: false)
-        print("touch cancelled")
     }
 }
