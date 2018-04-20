@@ -361,7 +361,7 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
             }
 
             // Spring vertical animation
-            UIView.animate(withDuration: self.transitionDuration(using: ctx), delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: [UIViewAnimationOptions.beginFromCurrentState], animations: {
+            UIView.animate(withDuration: self.transitionDuration(using: ctx), delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: [], animations: {
 
                 self.topAnc.constant = 0
                 container.setNeedsLayout()
