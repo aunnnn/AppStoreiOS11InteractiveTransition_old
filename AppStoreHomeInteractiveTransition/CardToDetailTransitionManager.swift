@@ -180,7 +180,6 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
             self.animatingContainerView = UIView()
             animatingContainerView.translatesAutoresizingMaskIntoConstraints = false
             animatingContainerView.backgroundColor = .clear
-            animatingContainerView.layer.cornerRadius = 16
             animatingContainerView.layer.masksToBounds = true
 
             container.addSubview(animatingContainerView)
@@ -189,6 +188,8 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
             self.animatingCardView = animatingCardView
             animatingCardView.translatesAutoresizingMaskIntoConstraints = false
             animatingCardView.fontState(isHighlighted: true)
+            animatingCardView.layer.cornerRadius = 16
+            animatingCardView.layer.masksToBounds = true
 
             originalCardModel = cardViewModel
             (animatingCardView).viewModel = cardViewModel.scaledHighlightImageState()
@@ -198,11 +199,9 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
             let whiteContentView = UIView()
             self.animatingWhiteContentView = whiteContentView
             whiteContentView.backgroundColor = .white
-            whiteContentView.layer.shadowColor = UIColor.black.cgColor
-            whiteContentView.layer.shadowOpacity = 0.2
-            whiteContentView.layer.shadowOffset = .init(width: 0, height: 4)
-            whiteContentView.layer.shadowRadius = 12
             whiteContentView.translatesAutoresizingMaskIntoConstraints = false
+            whiteContentView.layer.cornerRadius = 16
+            whiteContentView.layer.masksToBounds = true
 
             animatingContainerView.insertSubview(whiteContentView, belowSubview: animatingCardView)
 
@@ -261,6 +260,7 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
 
             self.animatingCardView = fromView
 
+            animatingCardView?.setNeedsDisplay()
             container.layoutIfNeeded()
         }
 
@@ -345,7 +345,8 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
                 // Blur & corner radius (FIXME: Bug corner radius not working!)
                 self.blurEffectView?.effect = UIBlurEffect(style: .light)
                 self.blurEffectView?.alpha = 1.0
-                self.animatingContainerView?.layer.cornerRadius = 0
+                self.animatingCardView?.layer.cornerRadius = 0
+                self.animatingWhiteContentView?.layer.cornerRadius = 0
 
                 self.widthAnc.constant = detailVc.cardContentView.bounds.width
                 self.heightAnc.constant = detailVc.cardContentView.bounds.height
