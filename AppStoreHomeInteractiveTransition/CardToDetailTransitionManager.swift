@@ -15,7 +15,7 @@ final class CardToDetailTransitionManager: UIPercentDrivenInteractiveTransition,
     final class ScreenEdgePanGesture: UIScreenEdgePanGestureRecognizer {}
 
     enum Constants {
-        static let transitionDuration: TimeInterval = 0.6
+        static let transitionDuration: TimeInterval = 0.5
         static let minimumScaleUntilDismissing: CGFloat = 0.8
         static let progressUntilDismissing: Double = 0.5
     }
