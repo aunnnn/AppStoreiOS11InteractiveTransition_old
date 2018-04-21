@@ -212,7 +212,9 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
             snapshotContent.leftAnchor.constraint(equalTo: whiteContentView.leftAnchor).isActive = true
             snapshotContent.rightAnchor.constraint(equalTo: whiteContentView.rightAnchor).isActive = true
             snapshotContent.topAnchor.constraint(equalTo: whiteContentView.topAnchor).isActive = true
-            snapshotContent.heightAnchor.constraint(equalToConstant: toView.bounds.height).isActive = true
+
+            let aspectRatioWH = toView.bounds.width/toView.bounds.height
+            snapshotContent.widthAnchor.constraint(equalTo: snapshotContent.heightAnchor, multiplier: aspectRatioWH).isActive = true
 
 
             animatingContainerView.insertSubview(whiteContentView, belowSubview: animatingCardView)
