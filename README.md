@@ -1,7 +1,7 @@
 # AppStoreTodayInteractiveTransition
 This is an attempt to simulate App Store's Card Interactive Transition. It is not exactly the same as the App Store's animation, but sure is a fun challenge.
 
-![preview](https://raw.githubusercontent.com/aunnnn/AppStoreTodayInteractiveTransition/master/appstoreanimation.gif)
+![preview](https://raw.githubusercontent.com/aunnnn/AppStoreiOS11InteractiveTransition/master/appstoreios11.gif)
 
 ## Overview
 
