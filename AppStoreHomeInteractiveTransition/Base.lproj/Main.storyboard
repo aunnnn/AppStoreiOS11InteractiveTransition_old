@@ -131,6 +131,7 @@
                     <connections>
                         <outlet property="cardContentView" destination="lj8-FC-Aca" id="Bfn-dF-h6h"/>
                         <outlet property="scrollView" destination="o18-1S-TpX" id="dbo-Gw-Csc"/>
+                        <outlet property="textView" destination="iqG-dy-iUV" id="c9Q-Lk-Rgv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ndb-0t-K8X" userLabel="First Responder" sceneMemberID="firstResponder"/>

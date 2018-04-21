@@ -175,7 +175,6 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
             blurEffectView.alpha = 0.0
 
             container.addSubview(toView)
-            toView.isHidden = true
 
             self.animatingContainerView = UIView()
             animatingContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -202,6 +201,19 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
             whiteContentView.translatesAutoresizingMaskIntoConstraints = false
             whiteContentView.layer.cornerRadius = 16
             whiteContentView.layer.masksToBounds = true
+
+            let snapshotContent = toView.snapshotView(afterScreenUpdates: true)!
+            snapshotContent.translatesAutoresizingMaskIntoConstraints = false
+
+            // IMPORTANT: Must snapshot before hiding it!
+            toView.isHidden = true
+
+            whiteContentView.addSubview(snapshotContent)
+            snapshotContent.leftAnchor.constraint(equalTo: whiteContentView.leftAnchor).isActive = true
+            snapshotContent.rightAnchor.constraint(equalTo: whiteContentView.rightAnchor).isActive = true
+            snapshotContent.topAnchor.constraint(equalTo: whiteContentView.topAnchor).isActive = true
+            snapshotContent.heightAnchor.constraint(equalToConstant: toView.bounds.height).isActive = true
+
 
             animatingContainerView.insertSubview(whiteContentView, belowSubview: animatingCardView)
 
