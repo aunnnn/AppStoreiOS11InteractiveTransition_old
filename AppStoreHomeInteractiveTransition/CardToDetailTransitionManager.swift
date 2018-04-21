@@ -289,6 +289,11 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
                 return [w, h, mx, my]
             }()
 
+            destinationConstraints.forEach { (c) in
+                c.priority = UILayoutPriority(999)
+                c.isActive = false
+            }
+
             UIView.animateKeyframes(withDuration: transitionDuration(using: ctx), delay: 0, options: [], animations: {
 
                 UIView.addKeyframe(withRelativeStartTime: 0.0,
@@ -305,7 +310,6 @@ extension CardToDetailTransitionManager: UIViewControllerAnimatedTransitioning {
                                     self.blurEffectView?.alpha = 0.0
                                     detailVc.scrollView.contentOffset = .zero
                                     destinationConstraints.forEach({ (c) in
-                                        c.priority = UILayoutPriority(999)
                                         c.isActive = true
                                     })
 
