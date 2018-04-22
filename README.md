@@ -12,6 +12,8 @@ There is no interactivity for the present animation. It is only a card expanding
 
 The card expanding animation is achieved by animating AutoLayout constraints. Checkout the code in `CardToDetailTransitionManager`.
 
+*I wrote some more details on [Stack Overflow.](https://stackoverflow.com/a/49956446/6666165)*
+
 ### Dismissing
 You can notice that there is interactivity at first, and it can be triggered in two ways: left edge pan, and drag down when you reach the top. Each uses its own gesture recognizer (with some delegate code to make it work together.)  In the interactivity phase, the view controller is scaled down. Then at certain point, the animation phase, the dismissing animation is triggered without interactivity, the view controller shrinking down, back to the same card position at home page.
 
