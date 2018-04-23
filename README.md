@@ -8,11 +8,14 @@ This is an attempt to simulate App Store's Card Interactive Transition. It is no
 All is done with the native API, e.g. `UIViewControllerAnimatedTransitioning` and friends. No external libraries. Core animation/transition is all in the `CardToDetailTransitionManager` class.
 
 ### Presenting
-There is no interactivity for the present animation. It is only a card expanding to fill the screen. The way I do this first to **hide the destination view, then create a new card view, a blur view, a container view, and animate things on those** to match the destination view.
 
-The card expanding animation is achieved by animating AutoLayout constraints. Checkout the code in `CardToDetailTransitionManager`.
+The card expanding animation is mainly achieved by animating AutoLayout constraints.
 
-*I wrote some more details on [Stack Overflow.](https://stackoverflow.com/a/49956446/6666165)*
+The way I do this is to hide the origin cell & destination view. Create a new card view, a blur view, a container view. Then animate things on those views to match the destination view.
+
+Checkout the code in `CardToDetailTransitionManager`.
+
+I wrote some more details on [StackOverflow](https://stackoverflow.com/a/49956446/6666165), and [Medium.](https://medium.com/@aunnnn/making-app-store-today-ios-11-custom-transition-part-1-presentation-9e4ef99e75d3)
 
 ### Dismissing
 You can notice that there is interactivity at first, and it can be triggered in two ways: left edge pan, and drag down when you reach the top. Each uses its own gesture recognizer (with some delegate code to make it work together.)  In the interactivity phase, the view controller is scaled down. Then at certain point, the animation phase, the dismissing animation is triggered without interactivity, the view controller shrinking down, back to the same card position at home page.
