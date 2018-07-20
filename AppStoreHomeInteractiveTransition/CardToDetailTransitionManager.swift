@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// Drag down to dismiss custom transition for benefit detail page.
+/// Drag down to dismiss custom transition
 final class CardToDetailTransitionManager: UIPercentDrivenInteractiveTransition, UIViewControllerTransitioningDelegate {
 
     final class PanGesture: UIPanGestureRecognizer {}
