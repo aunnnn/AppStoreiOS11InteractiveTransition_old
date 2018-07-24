@@ -32,8 +32,14 @@ class CardDetailViewController: AnimatableStatusBarViewController, UIScrollViewD
         super.viewDidLoad()
 
         scrollView.delegate = self
+        scrollView.contentInsetAdjustmentBehavior = .never
         cardContentView.viewModel = cardViewModel
         cardContentView.fontState(isHighlighted: true)
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.additionalSafeAreaInsets = .init(top: -view.safeAreaInsets.top, left: 0, bottom: 0, right: 0)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

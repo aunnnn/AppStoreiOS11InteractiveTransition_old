@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9gQ-6E-ajc">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="986-CV-P8A">
                                     <size key="itemSize" width="50" height="50"/>
@@ -42,12 +42,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="9gQ-6E-ajc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YsV-dh-lpZ"/>
-                            <constraint firstItem="9gQ-6E-ajc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" id="aSY-qH-tl1"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9gQ-6E-ajc" secondAttribute="trailing" id="diU-af-uBD"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9gQ-6E-ajc" secondAttribute="bottom" id="n5n-Hh-vdl"/>
+                            <constraint firstItem="9gQ-6E-ajc" firstAttribute="leading" secondItem="uZF-hM-vcD" secondAttribute="leading" id="YsV-dh-lpZ"/>
+                            <constraint firstItem="9gQ-6E-ajc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="aSY-qH-tl1"/>
+                            <constraint firstItem="uZF-hM-vcD" firstAttribute="trailing" secondItem="9gQ-6E-ajc" secondAttribute="trailing" id="diU-af-uBD"/>
+                            <constraint firstItem="uZF-hM-vcD" firstAttribute="bottom" secondItem="9gQ-6E-ajc" secondAttribute="bottom" id="n5n-Hh-vdl"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <viewLayoutGuide key="safeArea" id="uZF-hM-vcD"/>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="9gQ-6E-ajc" id="Sqi-56-hKZ"/>
@@ -65,13 +65,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o18-1S-TpX">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="duz-5r-bmS" userLabel="topmost guide view">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="eCP-nL-fHe"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o18-1S-TpX">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DJK-SU-CQp" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1172.5"/>
                                         <subviews>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OZ7-CN-Zxl" userLabel="LayoutHelperView">
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OZ7-CN-Zxl" userLabel="Card Layout Standin View">
                                                 <rect key="frame" x="-0.5" y="0.0" width="375" height="488"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
@@ -115,18 +122,21 @@
                                     <constraint firstAttribute="trailing" secondItem="DJK-SU-CQp" secondAttribute="trailing" id="xFA-5w-Hwm"/>
                                     <constraint firstItem="DJK-SU-CQp" firstAttribute="leading" secondItem="o18-1S-TpX" secondAttribute="leading" id="yf2-9i-rAp"/>
                                 </constraints>
+                                <viewLayoutGuide key="safeArea" id="O7u-ul-N38"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="lj8-FC-Aca" firstAttribute="top" relation="lessThanOrEqual" secondItem="lJD-Ya-yLk" secondAttribute="top" id="5Hi-ZL-ZU5"/>
-                            <constraint firstItem="o18-1S-TpX" firstAttribute="leading" secondItem="lJD-Ya-yLk" secondAttribute="leading" id="Vlf-8U-n5k"/>
-                            <constraint firstItem="o18-1S-TpX" firstAttribute="top" secondItem="lJD-Ya-yLk" secondAttribute="top" id="a3k-0s-0zg"/>
-                            <constraint firstItem="lJD-Ya-yLk" firstAttribute="bottom" secondItem="o18-1S-TpX" secondAttribute="bottom" id="bx6-1B-fmy"/>
-                            <constraint firstItem="lJD-Ya-yLk" firstAttribute="trailing" secondItem="o18-1S-TpX" secondAttribute="trailing" id="guK-17-60f"/>
+                            <constraint firstItem="duz-5r-bmS" firstAttribute="top" secondItem="YYE-if-Ap6" secondAttribute="top" id="6zd-QH-hkD"/>
+                            <constraint firstItem="lj8-FC-Aca" firstAttribute="top" relation="lessThanOrEqual" secondItem="duz-5r-bmS" secondAttribute="top" id="HMn-5H-31K"/>
+                            <constraint firstItem="o18-1S-TpX" firstAttribute="leading" secondItem="YYE-if-Ap6" secondAttribute="leading" id="Vlf-8U-n5k"/>
+                            <constraint firstItem="o18-1S-TpX" firstAttribute="top" secondItem="YYE-if-Ap6" secondAttribute="top" id="a3k-0s-0zg"/>
+                            <constraint firstAttribute="bottom" secondItem="o18-1S-TpX" secondAttribute="bottom" id="bx6-1B-fmy"/>
+                            <constraint firstAttribute="trailing" secondItem="duz-5r-bmS" secondAttribute="trailing" id="fkv-gk-N0a"/>
+                            <constraint firstAttribute="trailing" secondItem="o18-1S-TpX" secondAttribute="trailing" id="guK-17-60f"/>
+                            <constraint firstItem="duz-5r-bmS" firstAttribute="leading" secondItem="YYE-if-Ap6" secondAttribute="leading" id="nNi-kz-WmU"/>
                             <constraint firstItem="DJK-SU-CQp" firstAttribute="width" secondItem="YYE-if-Ap6" secondAttribute="width" id="pDD-hb-AjV"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="lJD-Ya-yLk"/>
                     </view>
                     <connections>
                         <outlet property="cardContentView" destination="lj8-FC-Aca" id="Bfn-dF-h6h"/>
