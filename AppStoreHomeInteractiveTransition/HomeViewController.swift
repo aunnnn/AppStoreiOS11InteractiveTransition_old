@@ -18,6 +18,8 @@ final class HomeViewController: AnimatableStatusBarViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
 
+    // We scale original image to fit the screen width * inverse of kHighlightedFactor
+    // So that when we press down the card, our image will be exactly screen width
     lazy var models: [CardCollectionViewCellViewModel] = [
         CardCollectionViewCellViewModel(primaryHeader: "Primary", secondaryHeader: "Secondary", descriptionHeader: "Desc", image: #imageLiteral(resourceName: "img3.jpg").resize(toWidth: UIScreen.main.bounds.size.width * (1/kHighlightedFactor))),
         CardCollectionViewCellViewModel(primaryHeader: "You won't believe this guy", secondaryHeader: "Something we want", descriptionHeader: "They have something we want which is not something we need.", image: #imageLiteral(resourceName: "img1.png").resize(toWidth: UIScreen.main.bounds.size.width * (1/kHighlightedFactor)))
@@ -92,6 +94,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         let currentCellFrame = cell.layer.presentation()!.frame
         let cardFrame = cell.superview!.convert(currentCellFrame, to: nil)
 
+        // We maintain scale down image version on the detail page, including animation
         vc.cardViewModel = cardModel.scaledHighlightImageState()
 
         // Card's frame relative to UIWindow
