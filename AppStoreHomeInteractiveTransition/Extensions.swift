@@ -8,18 +8,19 @@
 
 import UIKit
 
-extension UIView {
+protocol NibLoadable where Self: UIView {
+    func fromNib() -> UIView?
+}
+
+extension NibLoadable {
 
     @discardableResult
-    func fromNib<T : UIView>() -> T? {
-        guard let contentView = Bundle(for: type(of: self)).loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as? T else {
-            // xib not loaded, or its top view is of the wrong type
-            return nil
-        }
+    func fromNib() -> UIView? {
+        let contentView = Bundle(for: type(of: self)).loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as! UIView
         self.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.edges(to: self)
-        return contentView   // 7
+        return contentView
     }
 }
 

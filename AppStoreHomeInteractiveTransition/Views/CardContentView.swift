@@ -8,7 +8,7 @@
 
 import UIKit
 
-@IBDesignable class CardContentView: UIView {
+@IBDesignable class CardContentView: UIView, NibLoadable {
 
     var viewModel: CardCollectionViewCellViewModel? {
         didSet {
